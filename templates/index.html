@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe Game</title>
+    <title>Dice Rolling Game</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>2-Player Tic-Tac-Toe</h1>
-    <p>Player X and Player O alternate turns by clicking on the grid.</p>
-    <div id="game-board">
-        <!-- Tic-Tac-Toe cells with data attributes for game state -->
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-    </div>
-    <!-- Winning message -->
-    <div id="winning-message" class="hide">
-        <div data-winning-message-text></div>
-        <button id="restartButton">Restart</button>
-    </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <h1>Two Player Dice Game</h1>
+
+    <h2>Wins:</h2>
+    <p>Player 1 Wins: {{ player1_wins }}</p>
+    <p>Player 2 Wins: {{ player2_wins }}</p>
+
+    {% if winner %}
+        <h3>{{ winner }} rolled an 11 and won this round!</h3>
+        <a href="{{ url_for('reset') }}">Play Next Round</a><br>
+        <a href="{{ url_for('new_game') }}">Start a New Game</a>
+    {% else %}
+        <h3>It's Player {{ turn }}'s turn!</h3>
+        <form action="{{ url_for('roll') }}" method="get">
+            <button type="submit">Roll Dice</button>
+        </form>
+    {% endif %}
 </body>
 </html>
